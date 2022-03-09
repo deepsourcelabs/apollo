@@ -19,6 +19,14 @@ func NewHealthController(u health.Usecase) *HealthController {
 	}
 }
 
+// Health godoc
+// @Summary Get health status of a service
+// @Description Get health status of a service
+// @Tags Health
+// @Accept json
+// @Produce json
+// @Success 200 {object} Response
+// @Router /health [get]
 func (h *HealthController) GetPrimaryHealthCheck(c echo.Context) error {
 	ctx := c.Request().Context()
 
@@ -32,13 +40,21 @@ func (h *HealthController) GetPrimaryHealthCheck(c echo.Context) error {
 		return controllers.Error(c, http.StatusInternalServerError)
 	}
 
-	resp := health.Response{
+	resp := Response{
 		Results: results,
 	}
 
 	return controllers.Success(c, resp)
 }
 
+// Health godoc
+// @Summary Get health status of all services
+// @Description Get health status of all services
+// @Tags Health
+// @Accept json
+// @Produce json
+// @Success 200 {object} Response
+// @Router /health/:id [get]
 func (h *HealthController) GetHealthCheck(c echo.Context) error {
 	ctx := c.Request().Context()
 	id, err := strconv.Atoi(c.Param("id"))
@@ -56,7 +72,7 @@ func (h *HealthController) GetHealthCheck(c echo.Context) error {
 		return controllers.Error(c, http.StatusInternalServerError)
 	}
 
-	resp := health.Response{
+	resp := Response{
 		Results: results,
 	}
 

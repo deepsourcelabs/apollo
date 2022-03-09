@@ -18,6 +18,15 @@ func NewDependencyController(u health.Usecase) *DependencyController {
 	}
 }
 
+// Register godoc
+// @Summary Register new service
+// @Description Register new service.
+// @Tags Register
+// @Accept json
+// @Produce json
+// @Param parameter body RegisterRequest true "Register body:"
+// @Success 200 {object} health.Domain
+// @Router /register [post]
 func (d *DependencyController) Register(c echo.Context) error {
 	req := RegisterRequest{}
 	c.Bind(&req)

@@ -9,25 +9,25 @@ import (
 	"github.com/burntcarrot/apollo/entity/health"
 )
 
-func getResults(services []health.Domain) ([]health.Result, error) {
-	var results []health.Result
+func getResults(services []health.Domain) ([]Result, error) {
+	var results []Result
 
 	for _, srv := range services {
 		// check health of service
-		resp, err := http.Get(srv.URI)
+		data, err := http.Get(srv.URI)
 		if err != nil {
 			return nil, err
 		}
 
-		body, err := ioutil.ReadAll(resp.Body)
+		body, err := ioutil.ReadAll(data.Body)
 		if err != nil {
 			return nil, errors.New("failed to read from service")
 		}
-		defer resp.Body.Close()
+		defer data.Body.Close()
 
-		respNew := health.Response{}
-		json.Unmarshal([]byte(body), &respNew)
-		results = append(results, respNew.Results...)
+		resp := Response{}
+		json.Unmarshal([]byte(body), &resp)
+		results = append(results, resp.Results...)
 	}
 
 	return results, nil
