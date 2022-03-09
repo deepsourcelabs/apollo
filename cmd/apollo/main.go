@@ -11,10 +11,14 @@ import (
 	"github.com/burntcarrot/apollo/drivers/redis"
 	"github.com/burntcarrot/apollo/entity/health"
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "github.com/burntcarrot/apollo/docs"
 )
 
 func main() {
 	e := echo.New()
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	dbConfig := redis.DBConfig{
 		Addr: "localhost:6379",

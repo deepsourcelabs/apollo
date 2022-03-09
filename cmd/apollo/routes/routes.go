@@ -12,8 +12,14 @@ type Controllers struct {
 	DependencyController *dependency.DependencyController
 }
 
+// @title Apollo
+// @version 1.0
+// @description A distributed deep health check system
+// @contact.name DeepSource
+// @contact.url https://deepsource.io/
+// @BasePath /api/v1
 func (c *Controllers) InitRoutes(e *echo.Echo) {
-	api := e.Group("/api")
+	api := e.Group("/api/v1")
 	api.Use(middleware.Recover())
 
 	api.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

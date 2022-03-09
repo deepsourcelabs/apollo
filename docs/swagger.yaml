@@ -1,0 +1,96 @@
+basePath: /api/v1
+definitions:
+  dependency.RegisterRequest:
+    properties:
+      id:
+        description: 'TODO: probably should use a UUID'
+        type: integer
+      name:
+        type: string
+      uri:
+        type: string
+    type: object
+  health.Domain:
+    properties:
+      name:
+        type: string
+      uri:
+        type: string
+    type: object
+  health.Response:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/health.Result'
+        type: array
+    type: object
+  health.Result:
+    properties:
+      err:
+        type: string
+      name:
+        type: string
+      state:
+        type: string
+    type: object
+info:
+  contact:
+    name: DeepSource
+    url: https://deepsource.io/
+  description: A distributed health check system
+  title: Apollo
+  version: "1.0"
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Get health status of a service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.Response'
+      summary: Get health status of a service
+      tags:
+      - Health
+  /health/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get health of all services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.Response'
+      summary: Get health of all services
+      tags:
+      - Health
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: register new service, returns name and URI
+      parameters:
+      - description: 'Register body:'
+        in: body
+        name: parameter
+        required: true
+        schema:
+          $ref: '#/definitions/dependency.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.Domain'
+      summary: Register new service
+      tags:
+      - Register
+swagger: "2.0"
