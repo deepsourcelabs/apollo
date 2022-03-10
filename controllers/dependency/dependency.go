@@ -55,5 +55,5 @@ func (d *DependencyController) Register(c echo.Context) error {
 		return controllers.Error(c, http.StatusInternalServerError)
 	}
 
-	return controllers.Success(c, "woohoo")
+	return controllers.Success(c, nil)
 }
