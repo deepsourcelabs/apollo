@@ -31,7 +31,11 @@ func main() {
 	}
 
 	f.String("path", "", "path to config file")
-	f.Parse(os.Args[1:])
+	err := f.Parse(os.Args[1:])
+	if err != nil {
+		log.Println("failed to parse args")
+		f.Usage()
+	}
 
 	filePath, err := f.GetString("path")
 	if err != nil {
