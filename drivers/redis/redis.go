@@ -1,17 +1,17 @@
 package redis
 
-import "github.com/go-redis/redis/v8"
+import (
+	"github.com/burntcarrot/apollo/utils"
+	"github.com/go-redis/redis/v8"
+)
 
-type DBConfig struct {
-	Addr string
-}
-
-func (c *DBConfig) InitDB() *redis.Client {
+func GetConn(config *utils.Config) *redis.Client {
 	redisOpts := &redis.Options{
-		Addr:     c.Addr,
-		Password: "",
-		DB:       0,
+		Addr:     config.Redis.Addr,
+		Password: config.Redis.Password,
+		DB:       config.Redis.DB,
 	}
+
 	db := redis.NewClient(redisOpts)
 	return db
 }
