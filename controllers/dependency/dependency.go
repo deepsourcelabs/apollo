@@ -29,7 +29,10 @@ func NewDependencyController(u health.Usecase) *DependencyController {
 // @Router /register [post]
 func (d *DependencyController) Register(c echo.Context) error {
 	req := RegisterRequest{}
-	c.Bind(&req)
+	err := c.Bind(&req)
+	if err != nil {
+		return controllers.Error(c, http.StatusInternalServerError)
+	}
 
 	ctx := c.Request().Context()
 
