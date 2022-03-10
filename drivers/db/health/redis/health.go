@@ -9,17 +9,20 @@ import (
 	dbHealth "github.com/burntcarrot/apollo/drivers/db/health"
 	"github.com/burntcarrot/apollo/entity/health"
 	"github.com/go-redis/redis/v8"
+	"go.uber.org/zap"
 )
 
 const MAX_FETCH_ROWS = 9 * 100000
 
 type HealthRepo struct {
-	Conn *redis.Client
+	Conn   *redis.Client
+	logger *zap.SugaredLogger
 }
 
-func NewHealthRepo(conn *redis.Client) *HealthRepo {
+func NewHealthRepo(conn *redis.Client, logger *zap.SugaredLogger) *HealthRepo {
 	return &HealthRepo{
-		Conn: conn,
+		Conn:   conn,
+		logger: logger,
 	}
 }
 
@@ -31,6 +34,7 @@ func (h *HealthRepo) CreateService(ctx context.Context, srv health.Domain, id ui
 
 	raw, err := json.Marshal(createdService)
 	if err != nil {
+		h.logger.Errorf("[health/redis/CreateService] failed to marshal: %v\n", err)
 		return health.Domain{}, errors.New("failed to marshal")
 	}
 
@@ -38,6 +42,7 @@ func (h *HealthRepo) CreateService(ctx context.Context, srv health.Domain, id ui
 	key := fmt.Sprintf("apollo:%d:services", id)
 	err = h.Conn.RPush(ctx, key, raw).Err()
 	if err != nil {
+		h.logger.Errorf("[health/redis/CreateService] failed to push to %s: %v\n", key, err)
 		return health.Domain{}, errors.New("failed to create service")
 	}
 
@@ -46,6 +51,7 @@ func (h *HealthRepo) CreateService(ctx context.Context, srv health.Domain, id ui
 	newkey := "apollo:services"
 	err = h.Conn.RPush(ctx, newkey, raw).Err()
 	if err != nil {
+		h.logger.Errorf("[health/redis/CreateService] failed to push to %s: %v\n", newkey, err)
 		return health.Domain{}, errors.New("failed to create service")
 	}
 
@@ -56,6 +62,7 @@ func (h *HealthRepo) GetServicesByID(ctx context.Context, id uint) ([]health.Dom
 	key := fmt.Sprintf("apollo:%d:services", id)
 	raw, err := h.Conn.LRange(ctx, key, 0, MAX_FETCH_ROWS).Result()
 	if err != nil {
+		h.logger.Errorf("[health/redis/GetServicesByID] failed to fetch %s: %v\n", key, err)
 		return []health.Domain{}, errors.New("failed to fetch services")
 	}
 
@@ -64,6 +71,7 @@ func (h *HealthRepo) GetServicesByID(ctx context.Context, id uint) ([]health.Dom
 
 	for _, j := range raw {
 		if err := json.Unmarshal([]byte(j), srv); err != nil {
+			h.logger.Errorf("[health/redis/GetServicesByID] failed to unmarshal: %v\n", err)
 			return []health.Domain{}, errors.New("failed to unmarshal")
 		}
 
@@ -77,6 +85,7 @@ func (h *HealthRepo) GetAllServices(ctx context.Context) ([]health.Domain, error
 	key := "apollo:services"
 	raw, err := h.Conn.LRange(ctx, key, 0, MAX_FETCH_ROWS).Result()
 	if err != nil {
+		h.logger.Errorf("[health/redis/GetAllServices] failed to fetch %s: %v\n", key, err)
 		return []health.Domain{}, errors.New("failed to fetch services")
 	}
 
@@ -85,6 +94,7 @@ func (h *HealthRepo) GetAllServices(ctx context.Context) ([]health.Domain, error
 
 	for _, j := range raw {
 		if err := json.Unmarshal([]byte(j), srv); err != nil {
+			h.logger.Errorf("[health/redis/GetAllServices] failed to unmarshal: %v\n", err)
 			return []health.Domain{}, errors.New("failed to unmarshal")
 		}
 
@@ -92,5 +102,4 @@ func (h *HealthRepo) GetAllServices(ctx context.Context) ([]health.Domain, error
 	}
 
 	return services, nil
-
 }

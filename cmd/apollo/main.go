@@ -14,19 +14,23 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	_ "github.com/burntcarrot/apollo/docs"
+	"github.com/burntcarrot/apollo/logging"
 )
 
 func main() {
 	e := echo.New()
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
+	logger := logging.NewLogger()
+
 	dbConfig := redis.DBConfig{
 		Addr: "localhost:6379",
 	}
+
 	Conn := dbConfig.InitDB()
 	timeout := time.Duration(time.Minute * 5)
 
-	healthUsecase := health.NewUseCase(healthDbRedis.NewHealthRepo(Conn), timeout)
+	healthUsecase := health.NewUseCase(healthDbRedis.NewHealthRepo(Conn, logger), timeout)
 
 	healthController := hc.NewHealthController(*healthUsecase)
 	dependencyController := dc.NewDependencyController(*healthUsecase)
