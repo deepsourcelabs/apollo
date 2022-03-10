@@ -26,7 +26,10 @@ func getResults(services []health.Domain) ([]Result, error) {
 		defer data.Body.Close()
 
 		resp := Response{}
-		json.Unmarshal([]byte(body), &resp)
+		err = json.Unmarshal([]byte(body), &resp)
+		if err != nil {
+			return nil, errors.New("failed to unmarshal response body")
+		}
 		results = append(results, resp.Results...)
 	}
 
