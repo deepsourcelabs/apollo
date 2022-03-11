@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+// NewLogger returns a new Zap sugared logger.
 func NewLogger(logPath string) *zap.SugaredLogger {
 	writerSyncer := getLogWriter(logPath)
 	encoder := getEncoder()
@@ -15,6 +16,7 @@ func NewLogger(logPath string) *zap.SugaredLogger {
 	return sugarLogger
 }
 
+// getEncoder returns a Zap encoder.
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
@@ -22,6 +24,7 @@ func getEncoder() zapcore.Encoder {
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
+// getLogWriter returns a Zap WriteSyncer.
 func getLogWriter(logPath string) zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
 		Filename:   logPath,

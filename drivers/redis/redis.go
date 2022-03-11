@@ -5,6 +5,7 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
+// GetConn returns a Redis connection with configurations.
 func GetConn(config *utils.Config) *redis.Client {
 	redisOpts := &redis.Options{
 		Addr:     config.Redis.Addr,

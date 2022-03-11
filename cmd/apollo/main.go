@@ -21,9 +21,13 @@ import (
 )
 
 func main() {
+	// set up echo
 	e := echo.New()
+
+	// expose Swagger UI
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
+	// set up flags
 	f := flag.NewFlagSet("config", flag.ContinueOnError)
 	f.Usage = func() {
 		fmt.Println(f.FlagUsages())
@@ -48,15 +52,22 @@ func main() {
 		f.Usage()
 	}
 
+	// get configs from config file
 	conf := utils.GetConfig(filePath)
 
+	// set up logger
 	logger := logging.NewLogger(conf.Logging.File)
 
+	// get DB connection
 	Conn := redis.GetConn(conf)
+
+	// get timeout duration from config
 	timeout := utils.GetTimeout(conf)
 
+	// set up a new health use case
 	healthUsecase := health.NewUseCase(healthDb.NewHealthRepo(Conn, logger), timeout)
 
+	// set up controllers
 	healthController := hc.NewHealthController(*healthUsecase)
 	dependencyController := dc.NewDependencyController(*healthUsecase)
 	rc := routes.Controllers{
@@ -65,9 +76,11 @@ func main() {
 	}
 	rc.InitRoutes(e)
 
+	// warn user if server address is empty
 	if conf.Server.Addr == "" {
-		log.Println("failed to get server address, using random address.")
+		log.Println("[WARNING] failed to get server address, using random address.")
 	}
 
+	// start server
 	log.Println(e.Start(conf.Server.Addr))
 }

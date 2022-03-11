@@ -2,7 +2,6 @@ package health
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/burntcarrot/apollo/controllers"
 	"github.com/burntcarrot/apollo/entity/health"
@@ -57,12 +56,9 @@ func (h *HealthController) GetPrimaryHealthCheck(c echo.Context) error {
 // @Router /health/:id [get]
 func (h *HealthController) GetHealthCheck(c echo.Context) error {
 	ctx := c.Request().Context()
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return controllers.Error(c, http.StatusInternalServerError)
-	}
+	id := c.Param("id")
 
-	services, err := h.Usecase.GetServices(ctx, uint(id))
+	services, err := h.Usecase.GetServices(ctx, id)
 	if err != nil {
 		return controllers.Error(c, http.StatusInternalServerError)
 	}

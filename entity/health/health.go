@@ -17,14 +17,14 @@ func NewUseCase(repo DomainRepo, timeout time.Duration) *Usecase {
 	}
 }
 
-func (u *Usecase) CreateService(ctx context.Context, hd Domain, id uint) (Domain, error) {
+func (u *Usecase) CreateService(ctx context.Context, domain Domain, id string) (Domain, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 
-	return u.Repo.CreateService(ctx, hd, id)
+	return u.Repo.CreateService(ctx, domain, id)
 }
 
-func (u *Usecase) GetServices(ctx context.Context, id uint) ([]Domain, error) {
+func (u *Usecase) GetServices(ctx context.Context, id string) ([]Domain, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 

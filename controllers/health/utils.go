@@ -9,11 +9,12 @@ import (
 	"github.com/burntcarrot/apollo/entity/health"
 )
 
+// getResults scrapes health status from services.
 func getResults(services []health.Domain) ([]Result, error) {
 	var results []Result
 
 	for _, srv := range services {
-		// check health of service
+		// fetch health status
 		data, err := http.Get(srv.URI)
 		if err != nil {
 			return nil, err
@@ -25,6 +26,7 @@ func getResults(services []health.Domain) ([]Result, error) {
 		}
 		defer data.Body.Close()
 
+		// unmarshal response body into struct
 		resp := Response{}
 		err = json.Unmarshal([]byte(body), &resp)
 		if err != nil {

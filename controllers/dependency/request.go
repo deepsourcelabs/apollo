@@ -1,7 +1,7 @@
 package dependency
 
 type RegisterRequest struct {
-	ID   uint   `json:"id"` // TODO: probably should use a UUID
+	ID   string `json:"id"`
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }
