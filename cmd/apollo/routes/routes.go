@@ -33,6 +33,6 @@ func (c *Controllers) InitRoutes(e *echo.Echo) {
 
 	// routes
 	api.POST("/register", c.DependencyController.Register)
-	api.GET("/health", c.HealthController.GetPrimaryHealthCheck)
-	api.GET("/health/:id", c.HealthController.GetHealthCheck)
+	api.GET("/health", c.HealthController.GetHealthCheck)
+	api.GET("/health/:id", c.HealthController.GetHealthCheckByID)
 }

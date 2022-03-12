@@ -26,7 +26,7 @@ func NewHealthController(u health.Usecase) *HealthController {
 // @Produce json
 // @Success 200 {object} Response
 // @Router /health [get]
-func (h *HealthController) GetPrimaryHealthCheck(c echo.Context) error {
+func (h *HealthController) GetHealthCheck(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	services, err := h.Usecase.GetAllServices(ctx)
@@ -54,7 +54,7 @@ func (h *HealthController) GetPrimaryHealthCheck(c echo.Context) error {
 // @Produce json
 // @Success 200 {object} Response
 // @Router /health/:id [get]
-func (h *HealthController) GetHealthCheck(c echo.Context) error {
+func (h *HealthController) GetHealthCheckByID(c echo.Context) error {
 	ctx := c.Request().Context()
 	id := c.Param("id")
 

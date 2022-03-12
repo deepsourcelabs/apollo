@@ -23,3 +23,18 @@ Apollo server is a standalone server which helps in:
 - Triggering health checks
 
 Apollo SDKs will be integrated into the source code of the application to be monitored.
+
+## Development
+
+Apollo server can be built using `Makefile`:
+
+The `Makefile` assumes that you have a configuration file (`config.yaml` ) set up in the current directory. (check [how to set up configuration file](https://burntcarrot.github.io/apollo/docs/config)):
+
+```sh
+make dev
+```
+
+Other commands include:
+- `local_build`: Build Apollo server (stored at `/tmp/apollo`)
+- `local_run`: Runs Apollo server (requires configuration)
+- `swagger`: Generates Swagger documentation
