@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"github.com/burntcarrot/apollo/utils"
+	"github.com/deepsourcelabs/apollo/utils"
 	"github.com/go-redis/redis/v8"
 )
 

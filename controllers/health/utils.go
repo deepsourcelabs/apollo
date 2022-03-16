@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/burntcarrot/apollo/entity/health"
+	"github.com/deepsourcelabs/apollo/entity/health"
 )
 
 // getResults scrapes health status from services.

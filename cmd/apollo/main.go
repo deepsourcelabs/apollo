@@ -5,19 +5,19 @@ import (
 	"log"
 	"os"
 
-	"github.com/burntcarrot/apollo/cmd/apollo/routes"
-	dc "github.com/burntcarrot/apollo/controllers/dependency"
-	hc "github.com/burntcarrot/apollo/controllers/health"
-	healthDb "github.com/burntcarrot/apollo/drivers/db/health/redis"
-	"github.com/burntcarrot/apollo/drivers/redis"
-	"github.com/burntcarrot/apollo/entity/health"
+	"github.com/deepsourcelabs/apollo/cmd/apollo/routes"
+	dc "github.com/deepsourcelabs/apollo/controllers/dependency"
+	hc "github.com/deepsourcelabs/apollo/controllers/health"
+	healthDb "github.com/deepsourcelabs/apollo/drivers/db/health/redis"
+	"github.com/deepsourcelabs/apollo/drivers/redis"
+	"github.com/deepsourcelabs/apollo/entity/health"
 	"github.com/labstack/echo/v4"
 	flag "github.com/spf13/pflag"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
-	_ "github.com/burntcarrot/apollo/docs"
-	"github.com/burntcarrot/apollo/logging"
-	"github.com/burntcarrot/apollo/utils"
+	_ "github.com/deepsourcelabs/apollo/docs"
+	"github.com/deepsourcelabs/apollo/logging"
+	"github.com/deepsourcelabs/apollo/utils"
 )
 
 func main() {

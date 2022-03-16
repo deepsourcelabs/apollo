@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/burntcarrot/apollo/controllers/dependency"
-	"github.com/burntcarrot/apollo/controllers/health"
+	"github.com/deepsourcelabs/apollo/controllers/dependency"
+	"github.com/deepsourcelabs/apollo/controllers/health"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

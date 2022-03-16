@@ -1,4 +1,4 @@
-module github.com/burntcarrot/apollo
+module github.com/deepsourcelabs/apollo
 
 go 1.17
 

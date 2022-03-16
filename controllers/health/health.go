@@ -3,8 +3,8 @@ package health
 import (
 	"net/http"
 
-	"github.com/burntcarrot/apollo/controllers"
-	"github.com/burntcarrot/apollo/entity/health"
+	"github.com/deepsourcelabs/apollo/controllers"
+	"github.com/deepsourcelabs/apollo/entity/health"
 	"github.com/labstack/echo/v4"
 )
 

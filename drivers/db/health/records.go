@@ -1,6 +1,6 @@
 package health
 
-import "github.com/burntcarrot/apollo/entity/health"
+import "github.com/deepsourcelabs/apollo/entity/health"
 
 type Service struct {
 	Name string `json:"name"`

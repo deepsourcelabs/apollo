@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 
-	dbHealth "github.com/burntcarrot/apollo/drivers/db/health"
-	"github.com/burntcarrot/apollo/entity/health"
+	dbHealth "github.com/deepsourcelabs/apollo/drivers/db/health"
+	"github.com/deepsourcelabs/apollo/entity/health"
 	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 )
