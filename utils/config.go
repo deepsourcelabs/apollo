@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"log"
 	"path/filepath"
 	"time"
 
@@ -37,7 +36,7 @@ type timeoutConfig struct {
 }
 
 // GetConfig returns a populated Config.
-func GetConfig(filePath string) *Config {
+func GetConfig(filePath string) (*Config, error) {
 	// create a new koanf instance
 	k := koanf.New(".")
 
@@ -47,41 +46,41 @@ func GetConfig(filePath string) *Config {
 	// get absolute path from filePath
 	configPath, err := filepath.Abs(filePath)
 	if err != nil {
-		log.Fatalln("failed to read config path")
+		return nil, err
 	}
 
 	// load configs using a file provider
 	err = k.Load(file.Provider(configPath), parser)
 	if err != nil {
-		log.Fatalln("failed to read config file:", err)
+		return nil, err
 	}
 
 	// unmarshal redis configs
 	rc := &redisConfig{}
 	err = k.Unmarshal("redis", rc)
 	if err != nil {
-		log.Fatalln("failed to unmarshal redis config:", err)
+		return nil, err
 	}
 
 	// unmarshal server configs
 	sc := &serverConfig{}
 	err = k.Unmarshal("server", sc)
 	if err != nil {
-		log.Fatalln("failed to unmarshal server config:", err)
+		return nil, err
 	}
 
 	// unmarshal logging configs
 	lc := &loggingConfig{}
 	err = k.Unmarshal("logging", lc)
 	if err != nil {
-		log.Fatalln("failed to unmarshal logging config:", err)
+		return nil, err
 	}
 
 	// unmarshal timeout configs
 	tc := &timeoutConfig{}
 	err = k.Unmarshal("timeout", tc)
 	if err != nil {
-		log.Fatalln("failed to unmarshal timeout config:", err)
+		return nil, err
 	}
 
 	// populate config
@@ -92,7 +91,7 @@ func GetConfig(filePath string) *Config {
 		Timeout: *tc,
 	}
 
-	return conf
+	return conf, nil
 }
 
 // GetTimeout returns a time duration using configs.

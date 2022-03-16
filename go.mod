@@ -8,6 +8,7 @@ require (
 	github.com/labstack/echo/v4 v4.7.0
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/pflag v1.0.5
+	github.com/stretchr/testify v1.7.0
 	github.com/swaggo/echo-swagger v1.3.0
 	github.com/swaggo/swag v1.8.0
 	go.uber.org/zap v1.21.0
@@ -18,6 +19,7 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
@@ -34,6 +36,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.1 // indirect
@@ -47,4 +50,5 @@ require (
 	golang.org/x/tools v0.1.9 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )

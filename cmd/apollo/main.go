@@ -53,7 +53,10 @@ func main() {
 	}
 
 	// get configs from config file
-	conf := utils.GetConfig(filePath)
+	conf, err := utils.GetConfig(filePath)
+	if err != nil {
+		log.Fatalln("failed to load config:", err)
+	}
 
 	// set up logger
 	logger := logging.NewLogger(conf.Logging.File)
